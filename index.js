@@ -1,5 +1,6 @@
 // EDIT THIS FILE TO COMPLETE ASSIGNMENT QUESTION 1
 const { chromium } = require("playwright");
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 async function saveHackerNewsArticles() {
   // launch browser
@@ -20,13 +21,17 @@ async function saveHackerNewsArticles() {
   })
 
   // write the articleList to a CSV file
-  const csvWriter = createCsvWriter({
-    path: 'hacker_news_articles.csv',
+  const writeToCSV = createCsvWriter({
+    path: 'news_articles.csv',
     header: [
       { id: 'title', title: 'Title' },
       { id: 'url', title: 'URL' },
     ]
   });
+  await writeToCSV.writeRecords(articleList);
+  console.log('Top 10 articles have been saved to hacker_news_articles.csv');
+
+  await browser.close();
 }
 
 (async () => {
