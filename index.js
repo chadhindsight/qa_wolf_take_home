@@ -12,13 +12,18 @@ async function saveHackerNewsArticles() {
   await page.goto("https://news.ycombinator.com");
 
   // Use the '.athing' class to identify the <tr> el needed
-  const articleList = await page.$$eval('.athing', articles => {
-    return articles.slice(0, 10).map(article => {
-      const title = article.querySelector('.title a').innerText;
-      const url = article.querySelector('.title a').href;
-      return { title, url };
-    })
-  })
+  const articleList = await page.evaluate(() => {
+    const articles = document.querySelectorAll('.athing');
+    return Array.from(articles)
+      .slice(0, 10)
+      .map(article => {
+        const titleElement = article.querySelector('.title a');
+        return {
+          title: titleElement.innerText,
+          url: titleElement.href
+        };
+      });
+  });
 
   // write the articleList to a CSV file
   const writeToCSV = createCsvWriter({
