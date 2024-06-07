@@ -1,6 +1,6 @@
 // EDIT THIS FILE TO COMPLETE ASSIGNMENT QUESTION 1
 const { chromium } = require("playwright");
-const { writeArticlesToCSV } = require('./csvWriter');
+const { writeArticlesToCSV } = require('./csvGenerator.js');
 
 async function saveHackerNewsArticles() {
   // launch browser
@@ -21,7 +21,7 @@ async function saveHackerNewsArticles() {
   });
 
   // Execute imported method that writes the articleList to a CSV file
-  await writeArticlesToCSV(articleList, news_articles.csv)
+  await writeArticlesToCSV(articleList, "news_articles.csv")
   await browser.close();
 }
 
