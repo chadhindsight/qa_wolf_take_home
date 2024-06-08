@@ -11,7 +11,7 @@ async function saveHackerNewsArticles() {
   // go to Hacker News
   await page.goto("https://news.ycombinator.com");
 
-  // Use the '.athing' class to identify the <tr> els needed
+  // Use the '.athing' class to identify the <tr> elements needed
   const articleList = await page.$$eval('.athing', articles => {
     return articles.slice(0, 10).map(article => {
       const title = article.querySelector('.title a').innerText;
@@ -20,7 +20,6 @@ async function saveHackerNewsArticles() {
     });
   });
 
-  // Execute imported method that writes the articleList to a CSV file
   await writeArticlesToCSV(articleList, "news_articles.csv")
   await browser.close();
 }
