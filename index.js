@@ -13,7 +13,9 @@ async function saveHackerNewsArticles() {
 
   // Use the '.athing' class to identify the <tr> elements needed
   const articleList = await page.$$eval('.athing', articles => {
-    return articles.slice(0, 10).map(article => {
+    const topTen = articles.slice(0, 10)
+
+    return topTen.map(article => {
       const title = article.querySelector('.title a').innerText;
       const url = article.querySelector('.title a').href;
       return { title, url };
